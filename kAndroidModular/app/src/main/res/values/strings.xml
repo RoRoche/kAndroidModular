@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">kAndroidModular</string>
+
+    <string name="user_input_button">Load repos</string>
+    <string name="user_input_hint">Enter the user</string>
+</resources>
