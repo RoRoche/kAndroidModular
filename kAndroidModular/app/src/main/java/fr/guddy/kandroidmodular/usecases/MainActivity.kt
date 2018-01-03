@@ -1,7 +1,8 @@
-package fr.guddy.kandroidmodular
+package fr.guddy.kandroidmodular.usecases
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import fr.guddy.kandroidmodular.R
 import fr.guddy.kandroidmodular.usecases.userinput.UserInputFragment
 import fr.guddy.kandroidmodular.usecases.userrepos.UserReposFragment
 

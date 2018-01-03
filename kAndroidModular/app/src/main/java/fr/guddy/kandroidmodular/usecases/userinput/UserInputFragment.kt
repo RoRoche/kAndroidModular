@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.ilhasoft.support.validation.Validator
-import fr.guddy.kandroidmodular.MainActivity
+import fr.guddy.kandroidmodular.usecases.MainActivity
 import fr.guddy.kandroidmodular.R
 import fr.guddy.kandroidmodular.databinding.FragmentUserInputBinding
 
