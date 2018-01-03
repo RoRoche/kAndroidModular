@@ -15,7 +15,7 @@
 
 ## TODOs
 
-- [ ] redux-like avec [EasyFlow](https://github.com/Beh01der/EasyFlow) or [stateless4k](https://github.com/rossdanderson/stateless4k)
+- [ ] redux-like with FSM library like [EasyFlow](https://github.com/Beh01der/EasyFlow) or [stateless4k](https://github.com/rossdanderson/stateless4k)
 - [ ] check orientation changes
 - [ ] split into modules
 - [ ] unit test with mocked DI-components
