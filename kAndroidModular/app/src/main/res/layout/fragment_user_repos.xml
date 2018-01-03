@@ -5,19 +5,62 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="model"
             type="fr.guddy.kandroidmodular.usecases.userrepos.UserReposModel"/>
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{model.user}"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center_horizontal"
+            android:text="@{model.user}"
+            android:textStyle="bold"/>
 
-    </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{model.isLoading() ? View.VISIBLE : View.GONE}"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{model.error.message}"
+                android:visibility="@{model.isError() ? View.VISIBLE : View.GONE}"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/user_repos_empty"
+                android:visibility="@{model.isEmpty() ? View.VISIBLE : View.GONE}"/>
+
+            <TextView
+                android:id="@+id/textViewRepos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:scrollbars="vertical"
+                android:text="@{model.reposAsString()}"
+                android:visibility="@{model.isContent() ? View.VISIBLE : View.GONE}"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
 </layout>

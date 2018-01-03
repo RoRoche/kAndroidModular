@@ -35,7 +35,7 @@ class UserInputFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(UserInputViewModel::class.java)
-        binding.viewModel = viewModel
+        binding.model = viewModel.model
         binding.buttonLoadRepos.setOnClickListener { onClickLoadRepos() }
     }
 

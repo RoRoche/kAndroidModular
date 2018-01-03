@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="fr.guddy.kandroidmodular.usecases.userinput.UserInputViewModel"/>
+            name="model"
+            type="fr.guddy.kandroidmodular.usecases.userinput.UserInputModel"/>
     </data>
 
     <LinearLayout
@@ -28,7 +28,7 @@
                 android:hint="@string/user_input_hint"
                 android:inputType="text"
                 android:maxLines="1"
-                android:text="@={viewModel.model.user}"
+                android:text="@={model.user}"
                 app:validateType='@{"username"}'/>
         </android.support.design.widget.TextInputLayout>
 

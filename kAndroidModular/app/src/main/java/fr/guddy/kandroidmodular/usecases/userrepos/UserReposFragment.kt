@@ -1,37 +1,46 @@
 package fr.guddy.kandroidmodular.usecases.userrepos
 
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import fr.guddy.kandroidmodular.R
 import fr.guddy.kandroidmodular.databinding.FragmentUserReposBinding
 
+
 class UserReposFragment : Fragment() {
 
-    private lateinit var model: UserReposModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            model = UserReposModel(arguments.getString(ARG_USER))
-        }
-    }
+    private lateinit var viewModel: UserReposViewModel
+    private lateinit var binding: FragmentUserReposBinding
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val binding: FragmentUserReposBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
                 inflater,
                 R.layout.fragment_user_repos,
                 container,
                 false
         )
-        binding.model = model
+        binding.textViewRepos.movementMethod = ScrollingMovementMethod()
         return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this).get(UserReposViewModel::class.java)
+        viewModel.model.observe(
+                this,
+                Observer<UserReposModel> { model ->
+                    binding.model = model
+                }
+        )
+        arguments?.getString(ARG_USER)?.let { viewModel.updateModelUser(it) }
     }
 
     companion object Factory {
