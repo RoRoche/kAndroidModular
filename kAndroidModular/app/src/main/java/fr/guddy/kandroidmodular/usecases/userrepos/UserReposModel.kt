@@ -8,7 +8,6 @@ data class UserReposModel(
         val repos: List<Repo> = emptyList(),
         val error: Throwable? = null
 ) {
-
     fun isLoading() = loading
 
     fun isError() = !loading && error != null

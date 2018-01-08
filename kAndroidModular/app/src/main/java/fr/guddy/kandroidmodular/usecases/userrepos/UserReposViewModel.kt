@@ -5,13 +5,14 @@ import android.arch.lifecycle.ViewModel
 import fr.guddy.kandroidmodular.net.GitHubApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
 class UserReposViewModel : ViewModel(), KoinComponent {
     val model: MutableLiveData<UserReposModel> = MutableLiveData()
-    private val gitHubApi : GitHubApi by inject()
+    private val gitHubApi: GitHubApi by inject()
     private var disposable: Disposable? = null
 
     fun updateModelUser(user: String) {
@@ -29,18 +30,18 @@ class UserReposViewModel : ViewModel(), KoinComponent {
         disposable = gitHubApi.listRepos(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { result ->
+                .subscribeBy(
+                        onNext = {
                             model.value = UserReposModel(
                                     user = user,
-                                    repos = result
+                                    repos = it
                             )
                             dispose()
                         },
-                        { error ->
+                        onError = {
                             model.value = UserReposModel(
                                     user = user,
-                                    error = error
+                                    error = it
                             )
                             dispose()
                         }

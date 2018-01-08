@@ -32,7 +32,6 @@ fun createGitHubApi(client: OkHttpClient): GitHubApi {
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(Properties.SERVER_URL)
             .build()
-
     return retrofit.create(GitHubApi::class.java)
 }
 
