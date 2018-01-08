@@ -1,7 +1,6 @@
 package fr.guddy.kandroidmodular.usecases.userinput
 
 
-import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,9 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.ilhasoft.support.validation.Validator
-import fr.guddy.kandroidmodular.usecases.MainActivity
 import fr.guddy.kandroidmodular.R
 import fr.guddy.kandroidmodular.databinding.FragmentUserInputBinding
+import fr.guddy.kandroidmodular.usecases.MainActivity
+import org.koin.android.architecture.ext.getViewModel
 
 
 class UserInputFragment : Fragment() {
@@ -34,7 +34,7 @@ class UserInputFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(UserInputViewModel::class.java)
+        viewModel = getViewModel()
         binding.model = viewModel.model
         binding.buttonLoadRepos.setOnClickListener { onClickLoadRepos() }
     }
