@@ -7,12 +7,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
 
-class UserReposViewModel : ViewModel(), KoinComponent {
+class UserReposViewModel(val gitHubApi: GitHubApi) : ViewModel() {
     val model: MutableLiveData<UserReposModel> = MutableLiveData()
-    private val gitHubApi: GitHubApi by inject()
     private var disposable: Disposable? = null
 
     fun updateModelUser(user: String) {
