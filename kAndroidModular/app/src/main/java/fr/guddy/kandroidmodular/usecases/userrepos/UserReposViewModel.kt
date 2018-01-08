@@ -28,17 +28,17 @@ class UserReposViewModel(val gitHubApi: GitHubApi) : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onNext = {
+                        onNext = { repos ->
                             model.value = UserReposModel(
                                     user = user,
-                                    repos = it
+                                    repos = repos
                             )
                             dispose()
                         },
-                        onError = {
+                        onError = { error ->
                             model.value = UserReposModel(
                                     user = user,
-                                    error = it
+                                    error = error
                             )
                             dispose()
                         }

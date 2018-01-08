@@ -40,8 +40,8 @@ class UserReposFragment : Fragment() {
                     binding.model = model
                 }
         )
-        arguments?.getString(ARG_USER)?.let {
-            viewModel.updateModelUser(it)
+        arguments?.getString(ARG_USER)?.let { user ->
+            viewModel.updateModelUser(user)
         }
     }
 
