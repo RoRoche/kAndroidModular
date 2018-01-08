@@ -13,7 +13,10 @@ val netModule = applicationContext {
         createOkHttpClient()
     }
     bean {
-        createGitHubApi(get())
+        createGitHubApi(
+                get(),
+                getProperty(Properties.SERVER_URL)
+        )
     }
 }
 
@@ -25,16 +28,16 @@ fun createOkHttpClient(): OkHttpClient {
             .build()
 }
 
-fun createGitHubApi(client: OkHttpClient): GitHubApi {
+fun createGitHubApi(client: OkHttpClient, baseUrl: String): GitHubApi {
     val retrofit = Retrofit.Builder()
             .client(client)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(Properties.SERVER_URL)
+            .baseUrl(baseUrl)
             .build()
     return retrofit.create(GitHubApi::class.java)
 }
 
 object Properties {
-    const val SERVER_URL = "https://api.github.com/"
+    const val SERVER_URL = "SERVER_URL"
 }
