@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.fsm
+package fr.guddy.kandroidmodular.common.fsm
 
 import au.com.ds.ef.EventEnum
 

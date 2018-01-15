@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.fsm
+package fr.guddy.kandroidmodular.common.fsm
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel

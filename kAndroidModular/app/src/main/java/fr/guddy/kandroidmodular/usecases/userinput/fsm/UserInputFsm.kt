@@ -1,8 +1,8 @@
 package fr.guddy.kandroidmodular.usecases.userinput.fsm
 
-import fr.guddy.kandroidmodular.fsm.FsmContext
-import fr.guddy.kandroidmodular.fsm.FsmEvent
-import fr.guddy.kandroidmodular.fsm.FsmState
+import fr.guddy.kandroidmodular.common.fsm.FsmContext
+import fr.guddy.kandroidmodular.common.fsm.FsmEvent
+import fr.guddy.kandroidmodular.common.fsm.FsmState
 
 
 object WaitingUserInput : FsmState

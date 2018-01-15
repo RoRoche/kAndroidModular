@@ -1,2 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.guddy.kandroidmodular.common" />
+    package="fr.guddy.kandroidmodular.common">
+
+    <application>
+        <activity android:name=".usecases.DebugActivity" />
+    </application>
+</manifest>

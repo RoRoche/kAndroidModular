@@ -6,14 +6,14 @@ import au.com.ds.ef.EasyFlow
 import au.com.ds.ef.FlowBuilder.from
 import au.com.ds.ef.FlowBuilder.on
 import fr.guddy.kandroidmodular.R
-import fr.guddy.kandroidmodular.fsm.*
-import fr.guddy.kandroidmodular.mvvm.observe
-import fr.guddy.kandroidmodular.usecases.userrepos.fsm.ShowingUserRepos
+import fr.guddy.kandroidmodular.common.fsm.*
+import fr.guddy.kandroidmodular.common.mvvm.observe
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.UserFilled
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.WaitingUserInput
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.clearUserInputResult
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.userInputResult
 import fr.guddy.kandroidmodular.usecases.userinput.mvvm.UserInputFragment
+import fr.guddy.kandroidmodular.usecases.userrepos.fsm.ShowingUserRepos
 import fr.guddy.kandroidmodular.usecases.userrepos.mvvm.UserReposFragment
 import org.koin.android.architecture.ext.getViewModel
 

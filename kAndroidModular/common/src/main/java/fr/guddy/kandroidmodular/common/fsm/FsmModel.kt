@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.fsm
+package fr.guddy.kandroidmodular.common.fsm
 
 data class FsmModel(
         val forceEnterInitialState: Boolean = false,

@@ -13,7 +13,7 @@ import fr.guddy.kandroidmodular.di.allModules
 import fr.guddy.kandroidmodular.di.netModule
 import fr.guddy.kandroidmodular.net.GitHubApi
 import fr.guddy.kandroidmodular.net.dto.Repo
-import fr.guddy.kandroidmodular.usecases.DebugActivity
+import fr.guddy.kandroidmodular.common.usecases.DebugActivity
 import fr.guddy.kandroidmodular.usecases.userrepos.mvvm.UserReposFragment
 import io.reactivex.Single
 import org.hamcrest.Matcher

@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.di
+package fr.guddy.kandroidmodular.common.di
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider

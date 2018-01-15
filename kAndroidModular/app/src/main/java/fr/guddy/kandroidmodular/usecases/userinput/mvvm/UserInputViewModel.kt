@@ -1,7 +1,7 @@
 package fr.guddy.kandroidmodular.usecases.userinput.mvvm
 
 import android.arch.lifecycle.ViewModel
-import fr.guddy.kandroidmodular.mvvm.SingleLiveEvent
+import fr.guddy.kandroidmodular.common.mvvm.SingleLiveEvent
 
 class UserInputViewModel: ViewModel() {
     val model: UserInputModel = UserInputModel()

@@ -9,10 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.ilhasoft.support.validation.Validator
 import fr.guddy.kandroidmodular.R
+import fr.guddy.kandroidmodular.common.di.getViewModelFromActivity
+import fr.guddy.kandroidmodular.common.fsm.FsmViewModel
+import fr.guddy.kandroidmodular.common.mvvm.observe
 import fr.guddy.kandroidmodular.databinding.FragmentUserInputBinding
-import fr.guddy.kandroidmodular.di.getViewModelFromActivity
-import fr.guddy.kandroidmodular.fsm.FsmViewModel
-import fr.guddy.kandroidmodular.mvvm.observe
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.UserFilled
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.UserInputResult
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.userInputResult

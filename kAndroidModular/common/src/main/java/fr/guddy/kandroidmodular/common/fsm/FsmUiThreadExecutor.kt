@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.fsm
+package fr.guddy.kandroidmodular.common.fsm
 
 import android.os.Handler
 import android.os.Looper

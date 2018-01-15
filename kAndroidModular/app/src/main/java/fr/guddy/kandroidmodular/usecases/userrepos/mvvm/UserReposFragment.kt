@@ -12,7 +12,7 @@ import com.silmood.bindapter.BR
 import com.silmood.bindapter.Bindapter
 import fr.guddy.kandroidmodular.R
 import fr.guddy.kandroidmodular.databinding.FragmentUserReposBinding
-import fr.guddy.kandroidmodular.mvvm.observe
+import fr.guddy.kandroidmodular.common.mvvm.observe
 import fr.guddy.kandroidmodular.net.dto.Repo
 import org.koin.android.architecture.ext.getViewModel
 

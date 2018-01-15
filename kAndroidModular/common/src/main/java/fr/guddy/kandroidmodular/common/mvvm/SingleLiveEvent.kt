@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.mvvm
+package fr.guddy.kandroidmodular.common.mvvm
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.MutableLiveData

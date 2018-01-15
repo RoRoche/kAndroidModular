@@ -15,8 +15,8 @@ import com.agoda.kakao.KTextView
 import com.agoda.kakao.Screen
 import fr.guddy.kandroidmodular.di.allModules
 import fr.guddy.kandroidmodular.di.netModule
-import fr.guddy.kandroidmodular.fsm.FsmContext
-import fr.guddy.kandroidmodular.fsm.FsmViewModel
+import fr.guddy.kandroidmodular.common.fsm.FsmContext
+import fr.guddy.kandroidmodular.common.fsm.FsmViewModel
 import fr.guddy.kandroidmodular.net.GitHubApi
 import fr.guddy.kandroidmodular.net.dto.Repo
 import fr.guddy.kandroidmodular.usecases.MainActivity
