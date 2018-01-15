@@ -1,6 +1,6 @@
 package fr.guddy.kandroidmodular.di
 
-import fr.guddy.kandroidmodular.net.GitHubApi
+import fr.guddy.kandroidmodular.userrepos.net.GitHubApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module.applicationContext

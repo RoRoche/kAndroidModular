@@ -17,12 +17,12 @@ import fr.guddy.kandroidmodular.di.allModules
 import fr.guddy.kandroidmodular.di.netModule
 import fr.guddy.kandroidmodular.common.fsm.FsmContext
 import fr.guddy.kandroidmodular.common.fsm.FsmViewModel
-import fr.guddy.kandroidmodular.net.GitHubApi
-import fr.guddy.kandroidmodular.net.dto.Repo
+import fr.guddy.kandroidmodular.userrepos.net.GitHubApi
+import fr.guddy.kandroidmodular.userrepos.net.dto.Repo
 import fr.guddy.kandroidmodular.usecases.MainActivity
 import fr.guddy.kandroidmodular.userinput.fsm.UserInputResult
 import fr.guddy.kandroidmodular.userinput.fsm.userInputResult
-import fr.guddy.kandroidmodular.usecases.userrepos.fsm.ShowingUserRepos
+import fr.guddy.kandroidmodular.userrepos.fsm.ShowingUserRepos
 import io.reactivex.Single
 import org.hamcrest.Matcher
 import org.junit.Before

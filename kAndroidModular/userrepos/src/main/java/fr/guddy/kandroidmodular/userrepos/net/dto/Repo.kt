@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.net.dto
+package fr.guddy.kandroidmodular.userrepos.net.dto
 
 data class Repo(
         val id: String,

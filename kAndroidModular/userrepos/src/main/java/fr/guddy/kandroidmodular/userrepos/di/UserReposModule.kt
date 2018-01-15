@@ -1,6 +1,6 @@
-package fr.guddy.kandroidmodular.usecases.userrepos.di
+package fr.guddy.kandroidmodular.userrepos.di
 
-import fr.guddy.kandroidmodular.usecases.userrepos.mvvm.UserReposViewModel
+import fr.guddy.kandroidmodular.userrepos.mvvm.UserReposViewModel
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.applicationContext
 

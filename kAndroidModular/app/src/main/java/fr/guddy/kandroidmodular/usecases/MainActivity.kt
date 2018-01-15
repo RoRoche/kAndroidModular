@@ -13,8 +13,8 @@ import fr.guddy.kandroidmodular.userinput.fsm.WaitingUserInput
 import fr.guddy.kandroidmodular.userinput.fsm.clearUserInputResult
 import fr.guddy.kandroidmodular.userinput.fsm.userInputResult
 import fr.guddy.kandroidmodular.userinput.mvvm.UserInputFragment
-import fr.guddy.kandroidmodular.usecases.userrepos.fsm.ShowingUserRepos
-import fr.guddy.kandroidmodular.usecases.userrepos.mvvm.UserReposFragment
+import fr.guddy.kandroidmodular.userrepos.fsm.ShowingUserRepos
+import fr.guddy.kandroidmodular.userrepos.mvvm.UserReposFragment
 import org.koin.android.architecture.ext.getViewModel
 
 

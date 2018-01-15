@@ -1,6 +1,6 @@
-package fr.guddy.kandroidmodular.net
+package fr.guddy.kandroidmodular.userrepos.net
 
-import fr.guddy.kandroidmodular.net.dto.Repo
+import fr.guddy.kandroidmodular.userrepos.net.dto.Repo
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular
+package fr.guddy.kandroidmodular.userrepos
 
 import android.support.test.espresso.Espresso
 import android.support.test.espresso.assertion.ViewAssertions
@@ -9,12 +9,12 @@ import com.agoda.kakao.KRecyclerView
 import com.agoda.kakao.KTextView
 import com.agoda.kakao.Screen
 import com.android21buttons.fragmenttestrule.FragmentTestRule
-import fr.guddy.kandroidmodular.di.allModules
-import fr.guddy.kandroidmodular.di.netModule
-import fr.guddy.kandroidmodular.net.GitHubApi
-import fr.guddy.kandroidmodular.net.dto.Repo
+import fr.guddy.kandroidmodular.common.fsm.fsmModule
 import fr.guddy.kandroidmodular.common.usecases.DebugActivity
-import fr.guddy.kandroidmodular.usecases.userrepos.mvvm.UserReposFragment
+import fr.guddy.kandroidmodular.userrepos.di.userReposModule
+import fr.guddy.kandroidmodular.userrepos.mvvm.UserReposFragment
+import fr.guddy.kandroidmodular.userrepos.net.GitHubApi
+import fr.guddy.kandroidmodular.userrepos.net.dto.Repo
 import io.reactivex.Single
 import org.hamcrest.Matcher
 import org.junit.Before
@@ -59,16 +59,18 @@ class UserReposFragmentTest {
     val recycler: KRecyclerView = KRecyclerView({
         withId(R.id.listRepos)
     }, itemTypeBuilder = {
-        itemType(::ItemRepo)
+        itemType(UserReposFragmentTest::ItemRepo)
     })
     //endregion
 
     //region Test lifecycle
     @Before
     fun before() {
-        val modules = allModules.toMutableList()
-        modules.remove(netModule)
-        modules.add(mockNetModule)
+        val modules = listOf(
+                mockNetModule,
+                fsmModule,
+                userReposModule
+        )
         context = Koin().build(modules)
     }
     //endregion
@@ -97,7 +99,7 @@ class UserReposFragmentTest {
         )
         screen {
             recycler {
-                firstChild<MainActivityTest.ItemRepo> {
+                firstChild<ItemRepo> {
                     isVisible()
                     name { hasText("TestName") }
                     description { hasText("TestDescription") }

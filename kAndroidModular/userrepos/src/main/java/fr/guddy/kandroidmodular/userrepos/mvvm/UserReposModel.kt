@@ -1,6 +1,6 @@
-package fr.guddy.kandroidmodular.usecases.userrepos.mvvm
+package fr.guddy.kandroidmodular.userrepos.mvvm
 
-import fr.guddy.kandroidmodular.net.dto.Repo
+import fr.guddy.kandroidmodular.userrepos.net.dto.Repo
 
 data class UserReposModel(
         val user: String,

@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.usecases.userrepos.fsm
+package fr.guddy.kandroidmodular.userrepos.fsm
 
 import fr.guddy.kandroidmodular.common.fsm.FsmState
 

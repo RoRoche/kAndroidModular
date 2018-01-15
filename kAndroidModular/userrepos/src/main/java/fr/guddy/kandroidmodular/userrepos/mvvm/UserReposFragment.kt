@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.usecases.userrepos.mvvm
+package fr.guddy.kandroidmodular.userrepos.mvvm
 
 
 import android.databinding.DataBindingUtil
@@ -8,12 +8,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.silmood.bindapter.BR
 import com.silmood.bindapter.Bindapter
-import fr.guddy.kandroidmodular.R
-import fr.guddy.kandroidmodular.databinding.FragmentUserReposBinding
 import fr.guddy.kandroidmodular.common.mvvm.observe
-import fr.guddy.kandroidmodular.net.dto.Repo
+import fr.guddy.kandroidmodular.userrepos.BR
+import fr.guddy.kandroidmodular.userrepos.R
+import fr.guddy.kandroidmodular.userrepos.databinding.FragmentUserReposBinding
+import fr.guddy.kandroidmodular.userrepos.net.dto.Repo
 import org.koin.android.architecture.ext.getViewModel
 
 

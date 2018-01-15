@@ -9,7 +9,7 @@
 
         <variable
             name="model"
-            type="fr.guddy.kandroidmodular.usecases.userrepos.mvvm.UserReposModel" />
+            type="fr.guddy.kandroidmodular.userrepos.mvvm.UserReposModel" />
     </data>
 
     <LinearLayout

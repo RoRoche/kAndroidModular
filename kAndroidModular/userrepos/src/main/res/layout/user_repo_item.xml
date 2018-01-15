@@ -5,7 +5,7 @@
 
         <variable
             name="repo"
-            type="fr.guddy.kandroidmodular.net.dto.Repo" />
+            type="fr.guddy.kandroidmodular.userrepos.net.dto.Repo" />
     </data>
 
     <LinearLayout

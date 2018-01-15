@@ -1,8 +1,8 @@
-package fr.guddy.kandroidmodular.usecases.userrepos.mvvm
+package fr.guddy.kandroidmodular.userrepos.mvvm
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import fr.guddy.kandroidmodular.net.GitHubApi
+import fr.guddy.kandroidmodular.userrepos.net.GitHubApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy

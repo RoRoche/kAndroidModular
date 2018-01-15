@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">UserRepos</string>
+
+    <string name="user_repos_empty">No repo</string>
 </resources>
