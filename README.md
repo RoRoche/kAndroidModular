@@ -15,10 +15,9 @@
 
 ## TODOs
 
-- [X] redux-like with FSM library like [EasyFlow](https://github.com/Beh01der/EasyFlow) or [stateless4k](https://github.com/rossdanderson/stateless4k)
+- [X] use of FSM library [EasyFlow](https://github.com/Beh01der/EasyFlow)
 - [X] check orientation changes
 - [X] build repos screen with RecyclerView + Adapter
-- [ ] global unit testing
+- [X] global unit test with mocked DI-components
 - [ ] split into modules
-- [ ] unit test with mocked DI-components
 - [ ] unit test each module
