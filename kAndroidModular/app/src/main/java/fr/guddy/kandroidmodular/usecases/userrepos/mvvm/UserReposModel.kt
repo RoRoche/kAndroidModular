@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.usecases.userrepos
+package fr.guddy.kandroidmodular.usecases.userrepos.mvvm
 
 import fr.guddy.kandroidmodular.net.dto.Repo
 

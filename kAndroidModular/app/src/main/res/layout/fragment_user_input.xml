@@ -2,16 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="fr.guddy.kandroidmodular.usecases.userinput.UserInputFragment">
+    tools:context="fr.guddy.kandroidmodular.usecases.userinput.mvvm.UserInputFragment">
 
     <data>
 
         <variable
             name="model"
-            type="fr.guddy.kandroidmodular.usecases.userinput.UserInputModel" />
+            type="fr.guddy.kandroidmodular.usecases.userinput.mvvm.UserInputModel" />
         <variable
             name="viewModel"
-            type="fr.guddy.kandroidmodular.usecases.userinput.UserInputViewModel" />
+            type="fr.guddy.kandroidmodular.usecases.userinput.mvvm.UserInputViewModel" />
     </data>
 
     <LinearLayout

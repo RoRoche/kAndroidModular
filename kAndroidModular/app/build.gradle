@@ -67,4 +67,6 @@ dependencies {
     // android unit testing
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    // easyflow
+    implementation 'au.com.datasymphony:EasyFlow:1.3.1'
 }

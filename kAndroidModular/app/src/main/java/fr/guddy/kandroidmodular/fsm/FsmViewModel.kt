@@ -1,14 +1,30 @@
 package fr.guddy.kandroidmodular.fsm
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.VisibleForTesting
+import au.com.ds.ef.EventEnum
 
 
 class FsmViewModel : ViewModel() {
-    private var model: Model = Model()
+    val fsmModel: MutableLiveData<FsmModel> = MutableLiveData()
+
+    init {
+        fsmModel.value = FsmModel()
+    }
+
+    val flowContext: FsmContext
+        get() = fsmModel.value?.flowContext!!
+
+    fun trigger(event: EventEnum) {
+        flowContext.safeTrigger(event)
+    }
 
     @VisibleForTesting
-    fun setModel(model: Model) {
-        this.model = model
+    fun updateFlowContext(fsmContext: FsmContext) {
+        fsmModel.value = FsmModel(
+                forceEnterInitialState = true,
+                flowContext = fsmContext
+        )
     }
 }

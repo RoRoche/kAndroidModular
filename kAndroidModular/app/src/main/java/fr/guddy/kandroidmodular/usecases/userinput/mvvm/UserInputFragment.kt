@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.usecases.userinput
+package fr.guddy.kandroidmodular.usecases.userinput.mvvm
 
 
 import android.arch.lifecycle.Observer
@@ -11,13 +11,18 @@ import android.view.ViewGroup
 import br.com.ilhasoft.support.validation.Validator
 import fr.guddy.kandroidmodular.R
 import fr.guddy.kandroidmodular.databinding.FragmentUserInputBinding
-import fr.guddy.kandroidmodular.usecases.MainActivity
+import fr.guddy.kandroidmodular.di.getViewModelFromActivity
+import fr.guddy.kandroidmodular.fsm.FsmViewModel
+import fr.guddy.kandroidmodular.usecases.userinput.fsm.UserFilled
+import fr.guddy.kandroidmodular.usecases.userinput.fsm.UserInputResult
+import fr.guddy.kandroidmodular.usecases.userinput.fsm.userInputResult
 import org.koin.android.architecture.ext.getViewModel
 
 
 class UserInputFragment : Fragment() {
 
     private lateinit var viewModel: UserInputViewModel
+    private lateinit var fsmViewModel: FsmViewModel
     private lateinit var binding: FragmentUserInputBinding
     private lateinit var validator: Validator
 
@@ -35,6 +40,7 @@ class UserInputFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = getViewModel()
+        fsmViewModel = getViewModelFromActivity()
         binding.viewModel = viewModel
         binding.model = viewModel.model
         viewModel.onSelectEvent.observe(
@@ -46,9 +52,8 @@ class UserInputFragment : Fragment() {
     }
 
     private fun onSelect(user: String) {
-        if (validator.validate()) {
-            (activity as MainActivity).showUserReposFragment(user)
-        }
+        fsmViewModel.flowContext.userInputResult = UserInputResult(user)
+        fsmViewModel.trigger(UserFilled)
     }
 
     companion object Factory {

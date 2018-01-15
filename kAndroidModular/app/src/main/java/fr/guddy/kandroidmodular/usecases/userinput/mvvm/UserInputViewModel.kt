@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.usecases.userinput
+package fr.guddy.kandroidmodular.usecases.userinput.mvvm
 
 import android.arch.lifecycle.ViewModel
 import fr.guddy.kandroidmodular.mvvm.SingleLiveEvent

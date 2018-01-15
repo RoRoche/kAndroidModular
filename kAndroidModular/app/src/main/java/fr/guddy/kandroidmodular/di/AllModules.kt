@@ -1,9 +1,9 @@
-package fr.guddy.kandroidmodular
+package fr.guddy.kandroidmodular.di
 
 import fr.guddy.kandroidmodular.di.netModule
 import fr.guddy.kandroidmodular.fsm.fsmModule
-import fr.guddy.kandroidmodular.usecases.userinput.userInputModule
-import fr.guddy.kandroidmodular.usecases.userrepos.userReposModule
+import fr.guddy.kandroidmodular.usecases.userinput.di.userInputModule
+import fr.guddy.kandroidmodular.usecases.userrepos.di.userReposModule
 
 val allModules = listOf(
         netModule,
