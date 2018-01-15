@@ -1,4 +1,4 @@
-package guddy.fr.kandroidmodular
+package fr.guddy.kandroidmodular
 
 import fr.guddy.kandroidmodular.di.netModule
 import org.junit.Test

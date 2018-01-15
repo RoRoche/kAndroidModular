@@ -42,6 +42,9 @@ class UserInputFragment : Fragment() {
         viewModel = getViewModel()
         fsmViewModel = getViewModelFromActivity()
         binding.viewModel = viewModel
+        arguments?.getString(ARG_PRE_FILLED_USER)?.let { user ->
+            viewModel.model.user.set(user)
+        }
         binding.model = viewModel.model
         viewModel.onSelectEvent.observe(this) { user ->
             onSelect(user)
@@ -54,9 +57,19 @@ class UserInputFragment : Fragment() {
     }
 
     companion object Factory {
+        private val ARG_PRE_FILLED_USER = "PRE_FILLED_USER"
+
         fun newInstance(): UserInputFragment {
             val fragment = UserInputFragment()
             val args = Bundle()
+            fragment.arguments = args
+            return fragment
+        }
+
+        fun newInstance(user: String): UserInputFragment {
+            val fragment = UserInputFragment()
+            val args = Bundle()
+            args.putString(ARG_PRE_FILLED_USER, user)
             fragment.arguments = args
             return fragment
         }

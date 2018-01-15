@@ -79,6 +79,7 @@ class MainActivityTest {
     }
     //endregion
 
+    //region Test methods
     @Test
     fun when_typing_a_user_and_clicking_on_select_it_displays_user_and_repos() {
         // given
@@ -89,7 +90,7 @@ class MainActivityTest {
         onView(withId(R.id.editTextUser))
                 .perform(typeText(text))
                 .perform(closeSoftKeyboard())
-        onView(withId(R.id.buttonLoadRepos))
+        onView(withId(R.id.buttonSelect))
                 .perform(click())
 
         // then
@@ -112,6 +113,7 @@ class MainActivityTest {
         // then
         thenItDisplaysUserAndRepos(text)
     }
+    //endregion
 
     //region Inner job
     private fun whenGoingToState(fsmViewModel: FsmViewModel, fsmContext: FsmContext) {
