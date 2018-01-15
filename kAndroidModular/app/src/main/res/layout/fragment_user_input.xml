@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context="fr.guddy.kandroidmodular.usecases.userinput.UserInputFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="fr.guddy.kandroidmodular.usecases.userinput.UserInputFragment">
 
     <data>
 
         <variable
             name="model"
-            type="fr.guddy.kandroidmodular.usecases.userinput.UserInputModel"/>
+            type="fr.guddy.kandroidmodular.usecases.userinput.UserInputModel" />
+        <variable
+            name="viewModel"
+            type="fr.guddy.kandroidmodular.usecases.userinput.UserInputViewModel" />
     </data>
 
     <LinearLayout
@@ -29,19 +32,20 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:text="@={model.user}"
-                app:validateType='@{"username"}'/>
+                app:validateType='@{"username"}' />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v4.widget.Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/buttonLoadRepos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/user_input_button"/>
+            android:onClick="@{() -> viewModel.onSelectButtonClicked()}"
+            android:text="@string/user_input_button" />
 
     </LinearLayout>
 </layout>

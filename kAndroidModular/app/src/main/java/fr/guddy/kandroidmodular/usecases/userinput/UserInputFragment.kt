@@ -1,6 +1,7 @@
 package fr.guddy.kandroidmodular.usecases.userinput
 
 
+import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -20,8 +21,7 @@ class UserInputFragment : Fragment() {
     private lateinit var binding: FragmentUserInputBinding
     private lateinit var validator: Validator
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(
                 inflater,
                 R.layout.fragment_user_input,
@@ -35,15 +35,19 @@ class UserInputFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = getViewModel()
+        binding.viewModel = viewModel
         binding.model = viewModel.model
-        binding.buttonLoadRepos.setOnClickListener { onClickLoadRepos() }
+        viewModel.onSelectEvent.observe(
+                this,
+                Observer { user ->
+                    user?.let { onSelect(it) }
+                }
+        )
     }
 
-    private fun onClickLoadRepos() {
+    private fun onSelect(user: String) {
         if (validator.validate()) {
-            (activity as MainActivity).showUserReposFragment(
-                    viewModel.model.user.get()
-            )
+            (activity as MainActivity).showUserReposFragment(user)
         }
     }
 

@@ -1,7 +1,7 @@
 package fr.guddy.kandroidmodular.usecases.userinput
 
 import fr.guddy.kandroidmodular.fsm.State
-import fr.guddy.kandroidmodular.fsm.Trigger
+import fr.guddy.kandroidmodular.fsm.Event
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.applicationContext
 
@@ -13,4 +13,4 @@ val userInputModule = applicationContext {
 
 object WaitingUserInput : State
 
-data class OnUserFilled(val user: String) : Trigger
+data class OnUserFilled(val user: String) : Event

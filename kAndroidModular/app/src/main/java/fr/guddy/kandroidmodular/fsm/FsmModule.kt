@@ -9,4 +9,4 @@ val fsmModule = applicationContext {
     }
 }
 
-class OnBackPressed : Trigger
+class OnBackPressed : Event

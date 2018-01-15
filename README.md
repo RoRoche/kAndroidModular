@@ -4,8 +4,8 @@
 
 ## Use cases
 
-- Screen 1 : type a user
-- Screen 2 : load and display GitHub repos for this user
+- Screen 1: type a user
+- Screen 2: load and display GitHub repos for this user
 
 ## Technical stack
 
