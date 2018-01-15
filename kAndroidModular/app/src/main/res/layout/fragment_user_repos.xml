@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context="fr.guddy.kandroidmodular.fr.guddy.kandroidmodular.usecases.userinput.UserReposFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="fr.guddy.kandroidmodular.fr.guddy.kandroidmodular.usecases.userinput.UserReposFragment">
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="model"
-            type="fr.guddy.kandroidmodular.usecases.userrepos.mvvm.UserReposModel"/>
+            type="fr.guddy.kandroidmodular.usecases.userrepos.mvvm.UserReposModel" />
     </data>
 
     <LinearLayout
@@ -24,7 +24,7 @@
             android:layout_margin="8dp"
             android:gravity="center_horizontal"
             android:text="@{model.user}"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -35,30 +35,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="@{model.isLoading() ? View.VISIBLE : View.GONE}"/>
+                android:visibility="@{model.isLoading() ? View.VISIBLE : View.GONE}" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@{model.error.message}"
-                android:visibility="@{model.isError() ? View.VISIBLE : View.GONE}"/>
+                android:visibility="@{model.isError() ? View.VISIBLE : View.GONE}" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/user_repos_empty"
-                android:visibility="@{model.isEmpty() ? View.VISIBLE : View.GONE}"/>
+                android:visibility="@{model.isEmpty() ? View.VISIBLE : View.GONE}" />
 
-            <TextView
-                android:id="@+id/textViewRepos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:scrollbars="vertical"
-                android:text="@{model.reposAsString()}"
-                android:visibility="@{model.isContent() ? View.VISIBLE : View.GONE}"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/listRepos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{model.isContent() ? View.VISIBLE : View.GONE}" />
 
         </FrameLayout>
 

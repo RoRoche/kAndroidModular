@@ -1,0 +1,36 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="repo"
+            type="fr.guddy.kandroidmodular.net.dto.Repo" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textViewRepoName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{repo.name}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Repo name" />
+
+        <TextView
+            android:id="@+id/textViewRepoDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="end"
+            android:text="@{repo.description}"
+            android:textSize="14sp"
+            tools:text="Repo description" />
+    </LinearLayout>
+</layout>
