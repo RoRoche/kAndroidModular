@@ -1,6 +1,5 @@
 package fr.guddy.kandroidmodular.usecases
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import au.com.ds.ef.EasyFlow
@@ -8,7 +7,8 @@ import au.com.ds.ef.FlowBuilder.from
 import au.com.ds.ef.FlowBuilder.on
 import fr.guddy.kandroidmodular.R
 import fr.guddy.kandroidmodular.fsm.*
-import fr.guddy.kandroidmodular.usecases.userinput.ShowingUserRepos
+import fr.guddy.kandroidmodular.mvvm.observe
+import fr.guddy.kandroidmodular.usecases.userrepos.fsm.ShowingUserRepos
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.UserFilled
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.WaitingUserInput
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.clearUserInputResult
@@ -53,14 +53,9 @@ class MainActivity : AppCompatActivity() {
         flow.whenLeave(ShowingUserRepos) { context ->
             context.clearUserInputResult()
         }
-        fsmViewModel.fsmModel.observe(
-                this,
-                Observer<FsmModel> { model ->
-                    model?.let {
-                        flow.start(model.forceEnterInitialState, model.flowContext)
-                    }
-                }
-        )
+        fsmViewModel.fsmModel.observe(this) { model ->
+            flow.start(model.forceEnterInitialState, model.flowContext)
+        }
     }
 
     private fun showUserInputFragment() {
@@ -71,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showUserReposFragment(user: String) {
+    private fun showUserReposFragment(user: String) {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.ActivityMain_ViewGroup_Container, UserReposFragment.newInstance(user))
                 .addToBackStack(null)

@@ -1,7 +1,6 @@
 package fr.guddy.kandroidmodular.usecases.userinput.mvvm
 
 
-import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,6 +12,7 @@ import fr.guddy.kandroidmodular.R
 import fr.guddy.kandroidmodular.databinding.FragmentUserInputBinding
 import fr.guddy.kandroidmodular.di.getViewModelFromActivity
 import fr.guddy.kandroidmodular.fsm.FsmViewModel
+import fr.guddy.kandroidmodular.mvvm.observe
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.UserFilled
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.UserInputResult
 import fr.guddy.kandroidmodular.usecases.userinput.fsm.userInputResult
@@ -43,12 +43,9 @@ class UserInputFragment : Fragment() {
         fsmViewModel = getViewModelFromActivity()
         binding.viewModel = viewModel
         binding.model = viewModel.model
-        viewModel.onSelectEvent.observe(
-                this,
-                Observer { user ->
-                    user?.let { onSelect(it) }
-                }
-        )
+        viewModel.onSelectEvent.observe(this) { user ->
+            onSelect(user)
+        }
     }
 
     private fun onSelect(user: String) {

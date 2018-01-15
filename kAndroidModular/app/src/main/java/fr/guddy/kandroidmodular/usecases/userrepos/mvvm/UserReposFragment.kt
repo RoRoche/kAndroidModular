@@ -1,7 +1,6 @@
 package fr.guddy.kandroidmodular.usecases.userrepos.mvvm
 
 
-import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import fr.guddy.kandroidmodular.R
 import fr.guddy.kandroidmodular.databinding.FragmentUserReposBinding
+import fr.guddy.kandroidmodular.mvvm.observe
 import org.koin.android.architecture.ext.getViewModel
 
 
@@ -33,12 +33,9 @@ class UserReposFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = getViewModel()
-        viewModel.model.observe(
-                this,
-                Observer<UserReposModel> { model ->
-                    binding.model = model
-                }
-        )
+        viewModel.model.observe(this) { model ->
+            binding.model = model
+        }
         arguments?.getString(ARG_USER)?.let { user ->
             viewModel.updateModelUser(user)
         }

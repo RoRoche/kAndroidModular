@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.usecases.userinput
+package fr.guddy.kandroidmodular.usecases.userrepos.fsm
 
 import fr.guddy.kandroidmodular.fsm.FsmState
 
