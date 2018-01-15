@@ -20,8 +20,8 @@ import fr.guddy.kandroidmodular.common.fsm.FsmViewModel
 import fr.guddy.kandroidmodular.net.GitHubApi
 import fr.guddy.kandroidmodular.net.dto.Repo
 import fr.guddy.kandroidmodular.usecases.MainActivity
-import fr.guddy.kandroidmodular.usecases.userinput.fsm.UserInputResult
-import fr.guddy.kandroidmodular.usecases.userinput.fsm.userInputResult
+import fr.guddy.kandroidmodular.userinput.fsm.UserInputResult
+import fr.guddy.kandroidmodular.userinput.fsm.userInputResult
 import fr.guddy.kandroidmodular.usecases.userrepos.fsm.ShowingUserRepos
 import io.reactivex.Single
 import org.hamcrest.Matcher

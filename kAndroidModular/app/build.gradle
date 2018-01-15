@@ -42,9 +42,6 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
 
-    // misc
-    implementation 'com.github.Ilhasoft:data-binding-validator:1.0.0'
-
     // retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
@@ -56,14 +53,6 @@ dependencies {
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-architecture:$koin_version"
     testImplementation "org.koin:koin-test:$koin_version"
-
-    // anko
-    implementation "org.jetbrains.anko:anko-commons:$anko_version"
-
-    // paperparcel
-    compile 'nz.bradcampbell:paperparcel:2.0.4'
-    compile 'nz.bradcampbell:paperparcel-kotlin:2.0.4'
-    kapt 'nz.bradcampbell:paperparcel-compiler:2.0.4'
 
     // bindapter
     implementation 'com.silmood.bindapter:bindapter:0.1.1'
@@ -81,9 +70,8 @@ dependencies {
     // espresso DSL
     androidTestImplementation 'com.agoda.kakao:kakao:1.2.0'
 
-    // FragmentTestRule
-    androidTestImplementation 'com.21buttons:fragment-test-rule:1.1.0'
-
     // modules
     implementation project(':common')
+    implementation project(':userinput')
+    implementation project(':userrepos')
 }

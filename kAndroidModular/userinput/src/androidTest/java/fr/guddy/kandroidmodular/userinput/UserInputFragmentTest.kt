@@ -1,11 +1,11 @@
-package fr.guddy.kandroidmodular
+package fr.guddy.kandroidmodular.userinput
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.*
 import com.android21buttons.fragmenttestrule.FragmentTestRule
 import fr.guddy.kandroidmodular.common.usecases.DebugActivity
-import fr.guddy.kandroidmodular.usecases.userinput.mvvm.UserInputFragment
+import fr.guddy.kandroidmodular.userinput.mvvm.UserInputFragment
 import org.junit.Rule
 import org.junit.Test
 

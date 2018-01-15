@@ -20,5 +20,5 @@
 - [X] build repos screen with RecyclerView + Adapter
 - [X] global unit test with mocked DI-components
 - [ ] split into modules
-- [ ] unit test each module using [Fragment Test Rule](https://github.com/21Buttons/FragmentTestRule)
+- [ ] unit test each module using [Fragment Test Rule](https://github.com/21Buttons/FragmentTestRule), fix bug
 - [ ] use a mock framework

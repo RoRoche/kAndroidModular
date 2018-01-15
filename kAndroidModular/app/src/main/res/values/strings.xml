@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">kAndroidModular</string>
 
-    <string name="user_input_button">Select</string>
-    <string name="user_input_hint">Enter the user</string>
     <string name="user_repos_empty">No repo</string>
 </resources>

@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.usecases.userinput.fsm
+package fr.guddy.kandroidmodular.userinput.fsm
 
 import fr.guddy.kandroidmodular.common.fsm.FsmContext
 import fr.guddy.kandroidmodular.common.fsm.FsmEvent

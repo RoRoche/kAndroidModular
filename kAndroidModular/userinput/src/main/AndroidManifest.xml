@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.guddy.kandroidmodular.userinput" />
+    package="fr.guddy.kandroidmodular.userinput">
+
+    <application android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+</manifest>

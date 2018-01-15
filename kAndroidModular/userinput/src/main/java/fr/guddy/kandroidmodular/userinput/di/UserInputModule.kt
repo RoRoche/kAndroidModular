@@ -1,6 +1,6 @@
-package fr.guddy.kandroidmodular.usecases.userinput.di
+package fr.guddy.kandroidmodular.userinput.di
 
-import fr.guddy.kandroidmodular.usecases.userinput.mvvm.UserInputViewModel
+import fr.guddy.kandroidmodular.userinput.mvvm.UserInputViewModel
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.applicationContext
 

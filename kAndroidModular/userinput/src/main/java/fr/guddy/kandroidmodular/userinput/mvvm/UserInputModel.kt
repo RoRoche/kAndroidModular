@@ -1,4 +1,4 @@
-package fr.guddy.kandroidmodular.usecases.userinput.mvvm
+package fr.guddy.kandroidmodular.userinput.mvvm
 
 import android.databinding.ObservableField
 

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="fr.guddy.kandroidmodular.usecases.userinput.mvvm.UserInputFragment">
+    tools:context=".mvvm.UserInputFragment">
 
     <data>
 
         <variable
             name="model"
-            type="fr.guddy.kandroidmodular.usecases.userinput.mvvm.UserInputModel" />
+            type="fr.guddy.kandroidmodular.userinput.mvvm.UserInputModel" />
+
         <variable
             name="viewModel"
-            type="fr.guddy.kandroidmodular.usecases.userinput.mvvm.UserInputViewModel" />
+            type="fr.guddy.kandroidmodular.userinput.mvvm.UserInputViewModel" />
     </data>
 
     <LinearLayout
@@ -32,8 +32,7 @@
                 android:hint="@string/user_input_hint"
                 android:inputType="text"
                 android:maxLines="1"
-                android:text="@={model.user}"
-                app:validateType='@{"username"}' />
+                android:text="@={model.user}" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v4.widget.Space

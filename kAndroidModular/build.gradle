@@ -5,7 +5,6 @@ buildscript {
     ext.kotlin_version = '1.2.0'
     ext.android_support_library = '27.0.2'
     ext.koin_version = '0.8.0'
-    ext.anko_version = '0.10.4'
 
     repositories {
         maven { url 'https://maven.google.com' }
