@@ -9,7 +9,10 @@
 
 - mainly focused on UI concerns
 - independent, reusable and isolated
+- unit of code to compile (i.e., Android Studio module)
 - Almost like [React Component](https://reactjs.org/docs/react-component.html)
+
+![module](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/android_module.png)
 
 ###  Background: key concepts
 
@@ -30,7 +33,7 @@
 ![Fragments](https://developer.android.com/images/fundamentals/fragments.png)
 
 
-#### ViewModel (since API level 11)
+#### ViewModel (since ACC)
 
 > The `ViewModel` class is designed to store and manage UI-related data in a lifecycle conscious way. 
 > The `ViewModel` class allows data to survive configuration changes such as screen rotations.
@@ -59,6 +62,8 @@ fun onCreate(savedInstanceState: Bundle) {
 - Second activity: select a capable machine
 - With the help of [Anko](https://github.com/Kotlin/anko)
 
+![Anko](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/anko.png)
+
 ```
 sequenceDiagram
   user-->>CreateOperationActivity: click on select machine button
@@ -68,6 +73,8 @@ user-->>SelectMachineActivity: select a machine
     SelectMachineActivity->>CreateOperationActivity: machineId
 deactivate SelectMachineActivity
 ```
+
+![Start activity for result](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/start_activity_for_result.png)
 
 - `CreateOperationActivity`:
 
@@ -101,6 +108,7 @@ class SelectMachineActivity : AppCompatActivity() {
     }
 }
 ```
+
 - `CreateOperationActivity`:
 
 ```kotlin
@@ -292,6 +300,8 @@ productFlavors {
 - [Delegated Properties](https://kotlinlang.org/docs/reference/delegated-properties.html)
 - [Data classes](https://kotlinlang.org/docs/reference/data-classes.html)
 - [Default and named arguments](https://kotlinlang.org/docs/reference/functions.html)
+
+![kotlin-android-developers](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/kotlin-android-developers.png)
 
 ### What's next?
 
