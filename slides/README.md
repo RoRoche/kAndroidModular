@@ -1,11 +1,24 @@
+<!-- $size: 16:9 -->
+<!--
+$theme: gaia
+template: gaia
+-->
 
 # Reuse features in Android applications
 
-> An introduction to component modularity
+##### An introduction to component modularity
 
-## Introduction
+###### [Romain Rochegude](https://github.com/RoRoche)
 
-### What to reuse?
+---
+<!-- template: invert -->
+<!-- page_number: true -->
+
+# ==Introduction==
+
+---
+
+## What to reuse?
 
 - mainly focused on UI concerns
 - independent, reusable and isolated
@@ -14,9 +27,17 @@
 
 ![module](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/android_module.png)
 
-###  Background: key concepts
+---
 
-#### Activity (since API level 1)
+##  Background: key concepts
+
+- Activity (since API level 1)
+- Fragment (since API level 11)
+- ViewModel (since ACC)
+
+---
+
+### Activity (since API level 1)
 
 > one of the fundamental building blocks
 >
@@ -24,45 +45,60 @@
 
 - behind every screen stands a single `Activity`
 
-#### Fragment (since API level 11)
+---
+
+### Fragment (since API level 11)
 
 > portion of user interface in an `Activity`
 > 
 > <https://android-developers.googleblog.com/2011/02/android-30-fragments-api.html>
 
-![Fragments](https://developer.android.com/images/fundamentals/fragments.png)
+![Fragments](https://raw.githubusercontent.com/RoRoche/kAndroidModular/master/slides/assets/fragments.png)
 
+---
 
 #### ViewModel (since ACC)
 
-> The `ViewModel` class is designed to store and manage UI-related data in a lifecycle conscious way. 
-> The `ViewModel` class allows data to survive configuration changes such as screen rotations.
+> The `ViewModel` class 
+> - is designed to store and manage UI-related data in a lifecycle conscious way. 
+>- allows data to survive configuration changes such as screen rotations.
 >
 > <https://developer.android.com/topic/libraries/architecture/viewmodel.html>
 
-![ViewModel lifecycle](https://developer.android.com/images/topic/libraries/architecture/viewmodel-lifecycle.png)
+---
+
+![ViewModel lifecycle](https://raw.githubusercontent.com/RoRoche/kAndroidModular/master/slides/assets/viewmodel-lifecycle.png)
+
+---
 
 ```kotlin
 fun onCreate(savedInstanceState: Bundle) {
-    // Create a ViewModel the first time the system calls an activity's onCreate() method.
-    // Re-created activities receive the same MyViewModel instance created by the first activity.
+// Create a ViewModel the first time the system calls an activity's onCreate
+// Re-created activities receive the same MyViewModel instance
     val viewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
 }
 ```
 
-## Native solutions
+---
 
-### Activity + result code
+# ==1.== Native solutions
+
+---
+
+## Activity + result code
 
 > [Getting a Result from an Activity](https://developer.android.com/training/basics/intents/result.html)
 
-#### Example
+---
+
+### Example
 
 - First activity: fill a form to create a new operation
 - Second activity: select a capable machine
-- With the help of [Anko](https://github.com/Kotlin/anko)
 
-![Anko](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/anko.png)
+![Start activity for result](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/start_activity_for_result.png)
+
+---
 
 ```
 sequenceDiagram
@@ -74,9 +110,15 @@ user-->>SelectMachineActivity: select a machine
 deactivate SelectMachineActivity
 ```
 
-![Start activity for result](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/start_activity_for_result.png)
+---
 
-- `CreateOperationActivity`:
+- With the help of [Anko](https://github.com/Kotlin/anko)
+
+![Anko](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/anko.png)
+
+---
+
+#### `CreateOperationActivity.kt`
 
 ```kotlin
 findViewById<Button>(R.id.button_select_machine).setOnClickListener {
@@ -87,7 +129,9 @@ findViewById<Button>(R.id.button_select_machine).setOnClickListener {
 }
 ```
 
-- `SelectMachineActivity`:
+---
+
+### `SelectMachineActivity.kt`
 
 ```kotlin
 class SelectMachineActivity : AppCompatActivity() {
@@ -109,7 +153,9 @@ class SelectMachineActivity : AppCompatActivity() {
 }
 ```
 
-- `CreateOperationActivity`:
+---
+
+#### `CreateOperationActivity.kt`
 
 ```kotlin
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -123,18 +169,26 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 }
 ```
 
-- pros : 
+---
+
+## Activity + result code: ==assessments==
+
+- pros: 
   - stable
   - many libraries written this way
-- cons : 
+- cons: 
   - not composable (1 activity per screen)
-  - break the code flow ([rx to the rescue](https://github.com/VictorAlbertos/RxActivityResult))
+  - break the code flow (but [rx to the rescue](https://github.com/VictorAlbertos/RxActivityResult))
 
-### Fragment + callbacks
+---
+
+## Fragment + callbacks
 
 > [Communicating with Other Fragments](https://developer.android.com/training/basics/fragments/communicating.html)
 
-- The embedded `Fragment` defines a callback interface
+---
+
+### The embedded `Fragment` defines a callback interface
 
 ```kotlin
 class SelectMachineFragment : Fragment() {
@@ -144,21 +198,27 @@ class SelectMachineFragment : Fragment() {
 }
 ```
 
-- The `Activity` must implement this callback
+---
+
+### The `Activity` must implement this callback
 
 ```kotlin
-class CreateOperationActivity : AppCompatActivity(), SelectMachineFragment.OnFragmentInteractionListener {
+class CreateOperationActivity : 
+        AppCompatActivity(),
+        SelectMachineFragment.OnFragmentInteractionListener {
+                        
     override fun onSelectedMachine(selectedMachineId: Long) {
         this.selectedMachineId = selectedMachineId
     }
 }
 ```
 
-- The `Fragment` handles a reference to its callback
+---
+
+### The `Fragment` handles a reference to its callback
 
 ```kotlin
 class SelectMachineFragment : Fragment() {
-
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onAttach(context: Context) {
@@ -166,7 +226,8 @@ class SelectMachineFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException(context.toString() + 
+                " must implement OnFragmentInteractionListener")
         }
     }
 
@@ -177,11 +238,19 @@ class SelectMachineFragment : Fragment() {
 }
 ```
 
-- The `Fragment` uses the callback interface to deliver the event to the parent activity
+---
+
+### The `Fragment` uses the callback interface to deliver the event to the parent activity
 
 ```kotlin
-override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    val view = inflater.inflate(R.layout.fragment_select_machine, container, false)
+override fun onCreateView(inflater: LayoutInflater, 
+                          container: ViewGroup?, 
+                          savedInstanceState: Bundle?): View? {
+    val view = inflater.inflate(
+        R.layout.fragment_select_machine, 
+        container, 
+        false
+    )
     view.findViewById<Button>(R.id.select_machine_a).setOnClickListener {
         listener?.onSelectedMachine(1L)
     }
@@ -189,7 +258,9 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
 }
 ```
 
-- The `Activity` can deliver a message to another `Fragment`:
+---
+
+### The `Activity` can deliver a message to another `Fragment`
 
 ```kotlin
 class AnotherFragment : Fragment() {
@@ -199,10 +270,19 @@ class AnotherFragment : Fragment() {
 }
 ```
 
+---
+
 ```kotlin
-class CreateOperationActivity : AppCompatActivity(), SelectMachineFragment.OnFragmentInteractionListener {
+class CreateOperationActivity : 
+        AppCompatActivity(), 
+        SelectMachineFragment.OnFragmentInteractionListener {
+        
     override fun onSelectedMachine(selectedMachineId: Long) {
-        val anotherFragment = supportFragmentManager.findFragmentById(R.id.another_fragment_container_id) as AnotherFragment
+    
+        val anotherFragment = supportFragmentManager.findFragmentById(
+            R.id.another_fragment_container_id
+        ) as AnotherFragment
+        
         if (anotherFragment == null) {
             anotherFragment.updateUi(selectedMachineId)
         } else {
@@ -212,14 +292,20 @@ class CreateOperationActivity : AppCompatActivity(), SelectMachineFragment.OnFra
 }
 ```
 
-- pros : 
+---
+
+## Fragment + callbacks: ==assessments==
+
+- pros: 
   - composable
   - now compatible with the ACC [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel.html)
-- cons : 
+- cons: 
   - boilerplate code
   - no compile-time checking
 
-### Gradle product flavors
+---
+
+## Gradle product flavors
 
 > [Configure Build Variants](https://developer.android.com/studio/build/build-variants.html)
 
@@ -234,6 +320,10 @@ productFlavors {
 }
 ```
 
+---
+
+## Gradle product flavors
+
 - Pros:
   - few code
   - easy to extend styles
@@ -241,50 +331,69 @@ productFlavors {
   - one single project
   - applications must be very similar
 
- ### Assessments
+---
 
- - pros : 
+## Native solutions: ==assessments==
+
+ - pros: 
    - native solutions are possible
- - cons : 
+ - cons: 
    - difficult to setup
    - difficult to compose
    - no navigation concerns
 
-## Introduce a finite state machine (FSM)
+---
 
-### Foreword: key concepts
+# ==2.== Introduce a finite state machine (FSM)
+
+---
+
+## Foreword: key concepts
 
 - states, events, etc.
 - application as a FSM
 
-### Setup with Android components
+---
+
+## Setup with Android components
 
 - `Fragment` to define a state of the application (i.e., a use case) and output event(s)
 - `Activity` to manage states and how to navigate (i.e., the flow of events to change application state)
 
-### Specific cases
+---
 
-#### Orientation changes
+## Specific cases
+
+### Orientation changes
 
 - Use of the ACC [`ViewModel`](https://developer.android.com/topic/libraries/architecture/viewmodel.html) 
-- Define and share a specific [`ViewModel`]  between `Fragment`s
+- Define and share a specific `ViewModel`  between `Fragment`s
 
-#### Dependency injection
+### Dependency injection
 
 - The hard case of [Dagger 2](https://google.github.io/dagger/)
   - Pros: code generation, hosted by Google
   - Cons: many concepts to know and huge amount of code to write
-- A nice way with [Koin](https://github.com/Ekito/koin)
+- A nice way with **[Koin](https://github.com/Ekito/koin)**
 
-### Final MVVM architecture
+---
 
-![final architecture](https://developer.android.com/topic/libraries/architecture/images/final-architecture.png)
+## Final MVVM architecture
 
-## Conclusion
+- [AAC](https://developer.android.com/topic/libraries/architecture/index.html)
+- [Data Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html)
 
-### Benefits
+![final architecture](https://raw.githubusercontent.com/RoRoche/kAndroidModular/master/slides/assets/final-architecture.png)
 
-- relevant MVVM architecture opportunities with [AAC](https://developer.android.com/topic/libraries/architecture/index.html) and [Data Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html)
+---
+
+# ==Conclusion==
+
+---
+
+## Benefits
+
+- relevant MVVM architecture
 - power of the Kotlin language
 - an elegant way to define the application flow
 - no explicit coupling between screens
@@ -293,7 +402,9 @@ productFlavors {
   - test at application level
 - adjustable to technical stack
 
-### Main used Kotlin concepts
+---
+
+## Main used Kotlin concepts
 
 - [Extensions (functions, properties)](https://kotlinlang.org/docs/reference/extensions.html)
 - [Object declarations](https://kotlinlang.org/docs/reference/object-declarations.html#object-declarations)
@@ -301,24 +412,29 @@ productFlavors {
 - [Data classes](https://kotlinlang.org/docs/reference/data-classes.html)
 - [Default and named arguments](https://kotlinlang.org/docs/reference/functions.html)
 
-![kotlin-android-developers](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/kotlin-android-developers.png)
+---
 
-### What's next?
+## What's next?
 
-#### Practical
+### Practical
 
 - Syntax enhancement thanks to Kotlin
 - Group redundant concerns in Java/Android libraries
-- Android modules
-  - expose feature through a repository
+- Expose features through a repository
 
-#### Ideal
+---
+
+## What's next?
+
+### Ideal
 
 - front-end with drag&drop feature to build application flow?
 - Kotlin: build iOS application and share common modules?
 - react-native: write and share common modules (mobile and desktop)?
 
-## Thanks
+---
+
+# Thanks
 
 - [Macoscope](http://macoscope.com/blog/) for many relevant articles
   - [Applications as State Machines](http://macoscope.com/blog/applications-as-state-machines/)
