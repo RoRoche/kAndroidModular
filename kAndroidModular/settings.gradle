@@ -1,1 +1,1 @@
-include ':app', ':common', ':userinput', ':userrepos'
+include ':app', ':common', ':userinput', ':userrepos', ':nativesamples'
