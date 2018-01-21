@@ -367,7 +367,7 @@ productFlavors {
 ### Orientation changes
 
 - Use of the ACC [`ViewModel`](https://developer.android.com/topic/libraries/architecture/viewmodel.html) 
-- Define and share a specific `ViewModel`  between `Fragment`s
+  - Define and share a specific `ViewModel`  between `Fragment`s
 
 ### Dependency injection
 
@@ -382,6 +382,8 @@ productFlavors {
 
 - [AAC](https://developer.android.com/topic/libraries/architecture/index.html)
 - [Data Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html)
+
+---
 
 ![final architecture](https://raw.githubusercontent.com/RoRoche/kAndroidModular/master/slides/assets/final-architecture.png)
 
@@ -428,9 +430,9 @@ productFlavors {
 
 ### Ideal
 
-- front-end with drag&drop feature to build application flow?
+- Front-end with drag&drop feature to build application flow?
 - Kotlin: build iOS application and share common modules?
-- react-native: write and share common modules (mobile and desktop)?
+- React-native: write and share common modules (mobile and desktop)?
 
 ---
 
