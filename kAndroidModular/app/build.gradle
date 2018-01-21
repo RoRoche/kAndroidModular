@@ -49,6 +49,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    implementation 'com.github.amalhanaja:retrofit2-kotlin:1.0.0'
 
     // koin
     implementation "org.koin:koin-core:$koin_version"
@@ -68,6 +69,9 @@ dependencies {
 
     // espresso DSL
     androidTestImplementation 'com.agoda.kakao:kakao:1.2.0'
+
+    // FragmentTestRule
+    androidTestImplementation 'com.21buttons:fragment-test-rule:1.1.0'
 
     // modules
     implementation project(':common')

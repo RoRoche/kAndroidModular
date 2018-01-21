@@ -4,9 +4,9 @@ import fr.guddy.kandroidmodular.userrepos.net.GitHubApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module.applicationContext
-import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.kotlin.createRetrofitService
 
 val netModule = applicationContext {
     bean {
@@ -29,13 +29,12 @@ fun createOkHttpClient(): OkHttpClient {
 }
 
 fun createGitHubApi(client: OkHttpClient, baseUrl: String): GitHubApi {
-    val retrofit = Retrofit.Builder()
-            .client(client)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(baseUrl)
-            .build()
-    return retrofit.create(GitHubApi::class.java)
+    return createRetrofitService {
+        this.baseUrl = baseUrl
+        this.client = client
+        converterFactories = arrayListOf(GsonConverterFactory.create())
+        callAdapterFactories = arrayListOf(RxJava2CallAdapterFactory.create())
+    }
 }
 
 object Properties {
