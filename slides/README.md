@@ -20,12 +20,22 @@ template: gaia
 
 ## What to reuse?
 
+- divide a program into separated sub-programs (called modules) according to the features to implement
 - mainly focused on UI concerns
 - independent, reusable and isolated
 - unit of code to compile (i.e., Android Studio module)
-- Almost like [React Component](https://reactjs.org/docs/react-component.html)
+- almost like [React Component](https://reactjs.org/docs/react-component.html)
 
 ![module](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/android_module.png)
+
+---
+
+## Benefits
+
+- ease incremental builds and deliveries
+- module is unit-testable
+- modules can be added, modified or removed without any impact on one another
+- modules can be reused
 
 ---
 
@@ -350,8 +360,29 @@ productFlavors {
 
 ## Foreword: key concepts
 
-- states, events, etc.
-- application as a FSM
+- sequential logic circuits
+- finite number of states
+- one state at a time (the current state)
+- change from one state to another by triggering an event (a transition)
+
+---
+
+## Event-driven programming
+
+- the module fires an event,
+- the hosting application receives this event and acts accordingly
+- the flow of the program is determined by events (user actions, network requests, sensors, timer, other threads, etc.)
+
+---
+
+## Why [EasyFlow](https://github.com/Beh01der/EasyFlow)
+
+- simple to set up
+- possible definition of a global context
+- states definition through the `StateEnum` interface
+- events definition through the `EventEnum` interface
+- fluent API
+- callbacks to perform specific jobs when entering or leaving a state
 
 ---
 
@@ -362,12 +393,12 @@ productFlavors {
 
 ---
 
-## Specific cases
-
-### Orientation changes
+### Constraint: orientation changes
 
 - Use of the ACC [`ViewModel`](https://developer.android.com/topic/libraries/architecture/viewmodel.html) 
   - Define and share a specific `ViewModel`  between `Fragment`s
+
+---
 
 ### Dependency injection
 
@@ -378,14 +409,297 @@ productFlavors {
 
 ---
 
-## Final MVVM architecture
+## Example
 
-- [AAC](https://developer.android.com/topic/libraries/architecture/index.html)
-- [Data Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html)
+graph LR
+    WaitingUserInput-->|on user filled| ShowingUserRepos
+    ShowingUserRepos-->|on back pressed| WaitingUserInput
 
 ---
 
-![final architecture](https://raw.githubusercontent.com/RoRoche/kAndroidModular/master/slides/assets/final-architecture.png)
+### Common things
+
+- The global context of the FSM
+
+```kotlin
+class FsmContext : StatefulContext() {
+    val args = Bundle()
+}
+```
+
+---
+
+- The shared `ViewModel`
+
+```kotlin
+class FsmViewModel : ViewModel() {
+    val fsmModel: MutableLiveData<FsmModel> = MutableLiveData()
+
+    init {
+        fsmModel.value = FsmModel()
+    }
+
+    val flowContext: FsmContext
+        get() = fsmModel.value?.flowContext!!
+
+    fun trigger(event: EventEnum) {
+        flowContext.safeTrigger(event)
+    }
+}
+```
+
+---
+
+- The FSM module
+
+```kotlin
+val fsmModule = applicationContext {
+    viewModel {
+        FsmViewModel()
+    }
+}
+
+object BackPressed : FsmEvent
+```
+
+---
+    
+### Focus on "user input"
+
+#### The _Model_
+
+```kotlin
+class UserInputModel {
+    val user: ObservableField<String> = ObservableField()
+}
+```
+
+---
+
+#### The _ViewModel_
+
+```kotlin
+class UserInputViewModel: ViewModel() {
+    val model: UserInputModel = UserInputModel()
+    val onSelectEvent = SingleLiveEvent<String>()
+
+    fun onSelectButtonClicked() {
+        onSelectEvent.postValue(model.user.get())
+    }
+}
+```
+
+---
+
+#### The _View_
+
+```xml
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="model"
+            type="fr.guddy.kandroidmodular.userinput.mvvm.UserInputModel" />
+        <variable
+            name="viewModel"
+            type="fr.guddy.kandroidmodular.userinput.mvvm.UserInputViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/editTextUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@={model.user}" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonSelect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.onSelectButtonClicked()}"
+            android:text="@string/user_input_button" />
+    </LinearLayout>
+</layout>
+```
+
+---
+
+```kotlin
+class UserInputFragment : Fragment() {
+
+    private lateinit var viewModel: UserInputViewModel
+    private lateinit var fsmViewModel: FsmViewModel
+    private lateinit var binding: FragmentUserInputBinding
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_user_input,
+                container,
+                false
+        )
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = getViewModel()
+        fsmViewModel = getViewModelFromActivity()
+        binding.viewModel = viewModel
+        binding.model = viewModel.model
+        viewModel.onSelectEvent.observe(this) { user ->
+            onSelect(user)
+        }
+    }
+
+    private fun onSelect(user: String) {
+        if (TextUtils.isEmpty(user)) {
+            binding.editTextUser.error = getString(R.string.empty_user)
+        } else {
+            fsmViewModel.flowContext.userInputResult = UserInputResult(user)
+            fsmViewModel.trigger(UserFilled)
+        }
+    }
+}
+```
+
+---
+
+#### Koin setup for DI
+
+- Define the module:
+
+```kotlin
+val userInputModule = applicationContext {
+    viewModel {
+        UserInputViewModel()
+    }
+}
+```
+
+---
+
+- Start DI:
+
+```
+val allModules = listOf(
+        netModule,
+        fsmModule,
+        userInputModule,
+        userReposModule
+)
+
+class Application : MultiDexApplication() {
+    override fun onCreate() {
+        super.onCreate()
+
+        startKoin(
+                this,
+                allModules
+        )
+    }
+}
+```
+
+---
+
+#### FSM configuration
+
+- The result data
+
+```kotlin
+@PaperParcel
+data class UserInputResult(val user: String) : PaperParcelable {
+    companion object {
+        @JvmField
+        val CREATOR = PaperParcelUserInputResult.CREATOR
+    }
+}
+```
+
+---
+
+- The module setup
+
+```kotlin
+object WaitingUserInput : FsmState
+
+object UserFilled : FsmEvent
+
+private val _resultKey = "UserInputResult"
+
+var FsmContext.userInputResult: UserInputResult
+    get() = args.getParcelable(_resultKey)
+    set(value) {
+        args.putParcelable(_resultKey, value)
+    }
+
+fun FsmContext.clearUserInputResult() {
+    args.remove(_resultKey)
+}
+```
+
+---
+
+### Integration in the hosting application
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var fsmViewModel: FsmViewModel
+    private lateinit var flow: EasyFlow<FsmContext>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        fsmViewModel = getViewModel()
+        buildFsm()
+    }
+```
+
+---
+
+```kotlin
+// MainActivity.kt
+private fun buildFsm() {
+    flow = from<FsmContext>(WaitingUserInput).transit(
+            on(UserFilled).to(ShowingUserRepos).transit(
+                    on(BackPressed).to(WaitingUserInput)
+            )
+    )
+    // callbacks
+    flow.whenEnter(WaitingUserInput) { showUserInputFragment() }
+    flow.whenEnter(ShowingUserRepos) { context ->
+        showUserReposFragment(context.userInputResult.user)
+    }
+    flow.whenLeave(ShowingUserRepos) { context ->
+        context.clearUserInputResult()
+    }
+    // start with first state
+    flow.start(WaitingUserInput)
+}
+
+private fun showUserInputFragment() { /*...*/ }
+
+private fun showUserReposFragment(user: String) { /*...*/ }
+}
+```
+
+---
+
+```kotlin
+// MainActivity.kt
+
+override fun onBackPressed() {
+    if (supportFragmentManager.backStackEntryCount > 0) {
+        fsmViewModel.trigger(BackPressed)
+        supportFragmentManager.popBackStack()
+    } else {
+        super.onBackPressed()
+    }
+}
+```
 
 ---
 
@@ -433,6 +747,13 @@ productFlavors {
 - Front-end with drag&drop feature to build application flow?
 - Kotlin: build iOS application and share common modules?
 - React-native: write and share common modules (mobile and desktop)?
+
+---
+
+# To go further
+
+- https://roroche.github.io/AndroidModularSample/
+- https://github.com/RoRoche/kAndroidModular
 
 ---
 
