@@ -411,9 +411,11 @@ productFlavors {
 
 ## Example
 
+```
 graph LR
     WaitingUserInput-->|on user filled| ShowingUserRepos
     ShowingUserRepos-->|on back pressed| WaitingUserInput
+```
 
 ---
 
