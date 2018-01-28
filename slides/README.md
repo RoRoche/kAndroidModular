@@ -120,22 +120,19 @@ findViewById<Button>(R.id.button_select_machine).setOnClickListener {
 ### `SelectMachineActivity.kt`
 
 ```kotlin
-class SelectMachineActivity : AppCompatActivity() {
+findViewById<Button>(R.id.select_machine_a).setOnClickListener {
+    val intent = Intent()
+    intent.putExtra(MACHINE_ID, machineA.id)
+    setResult(
+        Activity.RESULT_OK,
+        intent
+    )
+    finish()
+}
 
-    findViewById<Button>(R.id.select_machine_a).setOnClickListener {
-        val intent = Intent()
-        intent.putExtra(MACHINE_ID, 1L)
-        setResult(
-            Activity.RESULT_OK,
-            intent
-        )
-        finish()
-    }
-
-    companion object Params {
-        val CAPABILITY = "SelectMachineActivity:capability"
-        val MACHINE_ID = "SelectMachineActivity:machineId"
-    }
+companion object Params {
+    val CAPABILITY = "SelectMachineActivity:capability"
+    val MACHINE_ID = "SelectMachineActivity:machineId"
 }
 ```
 
@@ -601,8 +598,8 @@ private fun buildFsm() {
     flow.whenLeave(ShowingUserRepos) { context ->
         context.clearUserInputResult()
     }
-    // start with first state
-    flow.start(WaitingUserInput)
+    // start with current state
+    flow.start(fsmViewModel.flowContext)
 }
 
 private fun showUserInputFragment() { /*...*/ }
