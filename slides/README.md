@@ -1,8 +1,6 @@
 <!-- $size: 16:9 -->
-<!--
-$theme: gaia
-template: gaia
--->
+
+![bg](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/arch-hero.png)
 
 # Reuse features in Android applications
 
@@ -14,16 +12,15 @@ template: gaia
 <!-- template: invert -->
 <!-- page_number: true -->
 
-# ==Introduction==
+# Introduction
 
 ---
 
 ## What to reuse?
 
-- divide a program into separated sub-programs (called modules) according to the features to implement
-- mainly focused on UI concerns
+- divide a program into separated sub-programs (features)
 - independent, reusable and isolated
-- unit of code to compile (i.e., Android Studio module)
+- unit of code to compile (i.e., Android Studio _module_)
 - almost like [React Component](https://reactjs.org/docs/react-component.html)
 
 ![module](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/android_module.png)
@@ -39,13 +36,7 @@ template: gaia
 
 ---
 
-##  Background: key concepts
-
-- Activity (since API level 1)
-- Fragment (since API level 11)
-- ViewModel (since ACC)
-
----
+##  Background: Android key concepts
 
 ### Activity (since API level 1)
 
@@ -57,6 +48,8 @@ template: gaia
 
 ---
 
+##  Background: Android key concepts
+
 ### Fragment (since API level 11)
 
 > portion of user interface in an `Activity`
@@ -67,7 +60,9 @@ template: gaia
 
 ---
 
-#### ViewModel (since ACC)
+##  Background: Android key concepts
+
+### ViewModel (since ACC)
 
 > The `ViewModel` class 
 > - is designed to store and manage UI-related data in a lifecycle conscious way. 
@@ -79,27 +74,23 @@ template: gaia
 
 ![ViewModel lifecycle](https://raw.githubusercontent.com/RoRoche/kAndroidModular/master/slides/assets/viewmodel-lifecycle.png)
 
----
-
 ```kotlin
 fun onCreate(savedInstanceState: Bundle) {
-// Create a ViewModel the first time the system calls an activity's onCreate
-// Re-created activities receive the same MyViewModel instance
+    // Create a ViewModel the first time the system calls an activity's onCreate
+    // Re-created activities receive the same MyViewModel instance
     val viewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
 }
 ```
 
 ---
 
-# ==1.== Native solutions
+# 1. Native solutions
 
 ---
 
 ## Activity + result code
 
 > [Getting a Result from an Activity](https://developer.android.com/training/basics/intents/result.html)
-
----
 
 ### Example
 
@@ -110,23 +101,8 @@ fun onCreate(savedInstanceState: Bundle) {
 
 ---
 
-```
-sequenceDiagram
-  user-->>CreateOperationActivity: click on select machine button
-    CreateOperationActivity->>SelectMachineActivity: startActivityForResult
-activate SelectMachineActivity
-user-->>SelectMachineActivity: select a machine
-    SelectMachineActivity->>CreateOperationActivity: machineId
-deactivate SelectMachineActivity
-```
+> With the help of [Anko](https://github.com/Kotlin/anko)
 
----
-
-- With the help of [Anko](https://github.com/Kotlin/anko)
-
-![Anko](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/anko.png)
-
----
 
 #### `CreateOperationActivity.kt`
 
@@ -181,12 +157,12 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 
 ---
 
-## Activity + result code: ==assessments==
+## Activity + result code: assessments
 
-- pros: 
+- Pros: 
   - stable
   - many libraries written this way
-- cons: 
+- Cons: 
   - not composable (1 activity per screen)
   - break the code flow (but [rx to the rescue](https://github.com/VictorAlbertos/RxActivityResult))
 
@@ -195,8 +171,6 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 ## Fragment + callbacks
 
 > [Communicating with Other Fragments](https://developer.android.com/training/basics/fragments/communicating.html)
-
----
 
 ### The embedded `Fragment` defines a callback interface
 
@@ -304,61 +278,34 @@ class CreateOperationActivity :
 
 ---
 
-## Fragment + callbacks: ==assessments==
+## Fragment + callbacks: assessments
 
-- pros: 
+- Pros: 
   - composable
   - now compatible with the ACC [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel.html)
-- cons: 
+- Cons: 
   - boilerplate code
   - no compile-time checking
 
 ---
 
-## Gradle product flavors
+## Native solutions: assessments
 
-> [Configure Build Variants](https://developer.android.com/studio/build/build-variants.html)
-
-```groovy
-productFlavors {
-    application1 {
-        applicationId "fr.romain.application1"
-    }
-    application2 {
-        applicationId "fr.romain.application2"
-    }
-}
-```
-
----
-
-## Gradle product flavors
-
-- Pros:
-  - few code
-  - easy to extend styles
-- Cons:
-  - one single project
-  - applications must be very similar
-
----
-
-## Native solutions: ==assessments==
-
- - pros: 
+ - Pros: 
    - native solutions are possible
- - cons: 
-   - difficult to setup
+   - tried and tested
+ - Cons: 
+   - troublesome to setup
    - difficult to compose
    - no navigation concerns
 
 ---
 
-# ==2.== Introduce a finite state machine (FSM)
+# 2. Use of a finite state machine (FSM)
 
 ---
 
-## Foreword: key concepts
+## Background: FSM key concepts
 
 - sequential logic circuits
 - finite number of states
@@ -371,7 +318,8 @@ productFlavors {
 
 - the module fires an event,
 - the hosting application receives this event and acts accordingly
-- the flow of the program is determined by events (user actions, network requests, sensors, timer, other threads, etc.)
+- the flow is determined by events 
+	- user actions, network requests, sensors, timer, other threads, etc.
 
 ---
 
@@ -391,31 +339,23 @@ productFlavors {
 - `Fragment` to define a state of the application (i.e., a use case) and output event(s)
 - `Activity` to manage states and how to navigate (i.e., the flow of events to change application state)
 
----
-
-### Constraint: orientation changes
+### Constraint 1: orientation changes
 
 - Use of the ACC [`ViewModel`](https://developer.android.com/topic/libraries/architecture/viewmodel.html) 
   - Define and share a specific `ViewModel`  between `Fragment`s
 
----
-
-### Dependency injection
+### Constraint 2: dependency injection
 
 - The hard case of [Dagger 2](https://google.github.io/dagger/)
   - Pros: code generation, hosted by Google
   - Cons: many concepts to know and huge amount of code to write
-- A nice way with **[Koin](https://github.com/Ekito/koin)**
+- A nice way with [Koin](https://github.com/Ekito/koin)
 
 ---
 
 ## Example
 
-```
-graph LR
-    WaitingUserInput-->|on user filled| ShowingUserRepos
-    ShowingUserRepos-->|on back pressed| WaitingUserInput
-```
+<img src="https://raw.githubusercontent.com/RoRoche/kAndroidModular/master/slides/assets/fsm_example.png" width="800">
 
 ---
 
@@ -430,6 +370,8 @@ class FsmContext : StatefulContext() {
 ```
 
 ---
+
+### Common things
 
 - The shared `ViewModel`
 
@@ -451,6 +393,8 @@ class FsmViewModel : ViewModel() {
 ```
 
 ---
+
+### Common things
 
 - The FSM module
 
@@ -475,8 +419,6 @@ class UserInputModel {
     val user: ObservableField<String> = ObservableField()
 }
 ```
-
----
 
 #### The _ViewModel_
 
@@ -529,18 +471,10 @@ class UserInputViewModel: ViewModel() {
 
 ```kotlin
 class UserInputFragment : Fragment() {
+    /*...*/
 
-    private lateinit var viewModel: UserInputViewModel
-    private lateinit var fsmViewModel: FsmViewModel
-    private lateinit var binding: FragmentUserInputBinding
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_user_input,
-                container,
-                false
-        )
+    override fun onCreateView(/*...*/): View? {
+        binding = DataBindingUtil.inflate(/*...*/)
         return binding.root
     }
 
@@ -550,9 +484,7 @@ class UserInputFragment : Fragment() {
         fsmViewModel = getViewModelFromActivity()
         binding.viewModel = viewModel
         binding.model = viewModel.model
-        viewModel.onSelectEvent.observe(this) { user ->
-            onSelect(user)
-        }
+        viewModel.onSelectEvent.observe(this) { user -> onSelect(user) }
     }
 
     private fun onSelect(user: String) {
@@ -574,32 +506,23 @@ class UserInputFragment : Fragment() {
 
 ```kotlin
 val userInputModule = applicationContext {
-    viewModel {
-        UserInputViewModel()
-    }
+    viewModel { UserInputViewModel() }
 }
 ```
-
----
 
 - Start DI:
 
 ```
 val allModules = listOf(
-        netModule,
-        fsmModule,
-        userInputModule,
-        userReposModule
+        /*...*/
+        userInputModule
 )
 
-class Application : MultiDexApplication() {
+class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        startKoin(
-                this,
-                allModules
-        )
+        startKoin(this, allModules)
     }
 }
 ```
@@ -620,6 +543,8 @@ data class UserInputResult(val user: String) : PaperParcelable {
 }
 ```
 
+> With the help of [paperparcel](https://github.com/grandstaish/paperparcel/)
+
 ---
 
 - The module setup
@@ -629,12 +554,10 @@ object WaitingUserInput : FsmState
 
 object UserFilled : FsmEvent
 
-private val _resultKey = "UserInputResult"
-
 var FsmContext.userInputResult: UserInputResult
-    get() = args.getParcelable(_resultKey)
+    get() = args.getParcelable("UserInputResult")
     set(value) {
-        args.putParcelable(_resultKey, value)
+        args.putParcelable("UserInputResult", value)
     }
 
 fun FsmContext.clearUserInputResult() {
@@ -685,7 +608,6 @@ private fun buildFsm() {
 private fun showUserInputFragment() { /*...*/ }
 
 private fun showUserReposFragment(user: String) { /*...*/ }
-}
 ```
 
 ---
@@ -705,7 +627,7 @@ override fun onBackPressed() {
 
 ---
 
-# ==Conclusion==
+# Conclusion
 
 ---
 
@@ -716,7 +638,7 @@ override fun onBackPressed() {
 - an elegant way to define the application flow
 - no explicit coupling between screens
 - increase testability
-  - test at module level
+  - test at module level (easy to stub injected dependencies thanks to Koin)
   - test at application level
 - adjustable to technical stack
 
@@ -732,6 +654,13 @@ override fun onBackPressed() {
 
 ---
 
+# To go further
+
+- https://roroche.github.io/AndroidModularSample/
+- https://github.com/RoRoche/kAndroidModular
+
+---
+
 ## What's next?
 
 ### Practical
@@ -740,22 +669,11 @@ override fun onBackPressed() {
 - Group redundant concerns in Java/Android libraries
 - Expose features through a repository
 
----
-
-## What's next?
-
 ### Ideal
 
 - Front-end with drag&drop feature to build application flow?
 - Kotlin: build iOS application and share common modules?
 - React-native: write and share common modules (mobile and desktop)?
-
----
-
-# To go further
-
-- https://roroche.github.io/AndroidModularSample/
-- https://github.com/RoRoche/kAndroidModular
 
 ---
 
