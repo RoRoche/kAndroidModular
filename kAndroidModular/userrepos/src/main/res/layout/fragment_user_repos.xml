@@ -56,7 +56,8 @@
                 android:id="@+id/listRepos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="@{model.isContent() ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{model.isContent() ? View.VISIBLE : View.GONE}"
+                tools:listitem="@layout/user_repo_item" />
 
         </FrameLayout>
 
