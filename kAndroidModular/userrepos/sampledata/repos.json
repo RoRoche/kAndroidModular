@@ -1,0 +1,24 @@
+{
+  "repos": [
+    {
+      "id": 98911221,
+      "name": "AndroidModularReloaded",
+      "description": "A sample Android application to demonstrate how to build screens as fully independent modules."
+    },
+    {
+      "id": 76166782,
+      "name": "AndroidModularSample",
+      "description": "A sample Android application to demonstrate how to build screens as fully independant modules."
+    },
+    {
+      "id": 52739055,
+      "name": "AndroidStarter",
+      "description": "A sample Android app using the MVP architecture."
+    },
+    {
+      "id": 73503807,
+      "name": "AndroidTestingBox",
+      "description": "Android project to experiment various testing tools"
+    }
+  ]
+}

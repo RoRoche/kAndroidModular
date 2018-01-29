@@ -32,7 +32,8 @@
                 android:hint="@string/user_input_hint"
                 android:inputType="text"
                 android:maxLines="1"
-                android:text="@={model.user}" />
+                android:text="@={model.user}"
+                tools:text="@sample/users" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v4.widget.Space
