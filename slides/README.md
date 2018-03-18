@@ -9,6 +9,7 @@
 ###### [Romain Rochegude](https://github.com/RoRoche)
 
 ---
+![bg](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/arch-hero.png)
 <!-- template: invert -->
 <!-- page_number: true -->
 
@@ -83,6 +84,7 @@ fun onCreate(savedInstanceState: Bundle) {
 ```
 
 ---
+![bg](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/arch-hero.png)
 
 # 1. Native solutions
 
@@ -233,7 +235,7 @@ override fun onCreateView(inflater: LayoutInflater,
         false
     )
     view.findViewById<Button>(R.id.select_machine_a).setOnClickListener {
-        listener?.onSelectedMachine(1L)
+        listener?.onSelectedMachine(machineA.id)
     }
     return view
 }
@@ -264,7 +266,7 @@ class CreateOperationActivity :
             R.id.another_fragment_container_id
         ) as AnotherFragment
         
-        if (anotherFragment == null) {
+        if (anotherFragment != null) {
             anotherFragment.updateUi(selectedMachineId)
         } else {
             TODO("create and display AnotherFragment with selectedMachineId")
@@ -298,6 +300,7 @@ class CreateOperationActivity :
 
 ---
 
+![bg](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/arch-hero.png)
 # 2. Use of a finite state machine (FSM)
 
 ---
@@ -335,6 +338,8 @@ class CreateOperationActivity :
 
 - `Fragment` to define a state of the application (i.e., a use case) and output event(s)
 - `Activity` to manage states and how to navigate (i.e., the flow of events to change application state)
+
+---
 
 ### Constraint 1: orientation changes
 
@@ -447,15 +452,11 @@ class UserInputViewModel: ViewModel() {
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <EditText
-            android:id="@+id/editTextUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@={model.user}" />
-
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/buttonSelect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{() -> viewModel.onSelectButtonClicked()}"
@@ -503,9 +504,13 @@ class UserInputFragment : Fragment() {
 
 ```kotlin
 val userInputModule = applicationContext {
-    viewModel { UserInputViewModel() }
+    viewModel { 
+        UserInputViewModel() 
+    }
 }
 ```
+
+---
 
 - Start DI:
 
@@ -624,6 +629,7 @@ override fun onBackPressed() {
 
 ---
 
+![bg](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/arch-hero.png)
 # Conclusion
 
 ---
@@ -674,6 +680,7 @@ override fun onBackPressed() {
 
 ---
 
+![bg](https://github.com/RoRoche/kAndroidModular/raw/master/slides/assets/arch-hero.png)
 # Thanks
 
 - [Macoscope](http://macoscope.com/blog/) for many relevant articles
