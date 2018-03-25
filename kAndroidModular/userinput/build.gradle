@@ -49,6 +49,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:multidex:1.0.2'
+    kaptAndroidTest 'com.android.databinding:compiler:3.0.1'
 
     // koin
     implementation "org.koin:koin-core:$koin_version"

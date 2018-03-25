@@ -21,5 +21,4 @@
 - [X] global unit test with mocked DI-components
 - [X] split into modules
 - [X] unit test each module using [Fragment Test Rule](https://github.com/21Buttons/FragmentTestRule)
-    - [ ] fix bug
-- [ ] use a mock framework
+    - [X] [fix bug](https://stackoverflow.com/questions/48272363/noclassdeffounderror-android-databinding-databindingutil-when-running-android/)
